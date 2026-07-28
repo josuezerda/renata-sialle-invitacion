@@ -49,51 +49,33 @@ function App() {
 
   const startVideo = () => {
     setViewMode('video');
-    setTimeout(() => {
-      if (videoRef.current) {
-        videoRef.current.play().catch(e => console.error("Error playing video:", e));
-      }
-    }, 100);
+    if (videoRef.current) {
+      videoRef.current.play().catch(e => console.error("Error playing video:", e));
+    }
   };
 
   const skipVideo = () => {
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
     setViewMode('invitation');
   };
 
-  if (viewMode === 'landing') {
-    return (
-      <div className="app-container" style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
-        {/* We can use one of the photos as a dim background for the landing */}
-        <div style={{
-          position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
-          backgroundImage: 'url(/fotos/photo-1.jpeg)', backgroundSize: 'cover', backgroundPosition: 'center',
-          opacity: 0.3, zIndex: 0
-        }}></div>
-        
-        <div style={{ zIndex: 10, textAlign: 'center' }}>
-          <FadeIn delay={0.2} direction="down">
-            <p className="magazine-subtitle" style={{ marginBottom: '1rem' }}>Edición Especial • 2026</p>
-          </FadeIn>
-          <FadeIn delay={0.4}>
-            <h1 className="magazine-title" style={{ fontSize: 'clamp(3rem, 12vw, 8rem)' }}>Renata<br/>Sialle</h1>
-          </FadeIn>
-          
-          <FadeIn delay={0.8}>
-            <button onClick={startVideo} className="btn-primary" style={{ marginTop: '3rem', display: 'flex', alignItems: 'center', gap: '0.5rem', margin: '3rem auto 0 auto' }}>
-              <Play size={18} /> Ingresar a la invitación
-            </button>
-          </FadeIn>
-        </div>
-      </div>
-    );
-  }
-
-  if (viewMode === 'video') {
-    return (
-      <div style={{ width: '100vw', height: '100vh', backgroundColor: 'black', position: 'relative' }}>
+  return (
+    <div className="app-container" style={{ position: 'relative', overflowX: 'hidden' }}>
+      
+      {/* Video is always mounted to preload it, but only visible during 'video' mode */}
+      <div 
+        style={{ 
+          display: viewMode === 'video' ? 'block' : 'none',
+          position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', 
+          backgroundColor: 'black', zIndex: 100 
+        }}
+      >
         <video 
           ref={videoRef}
           src="/intro-video.mp4" 
+          preload="auto"
           style={{ width: '100%', height: '100%', objectFit: 'contain' }}
           onEnded={skipVideo}
           playsInline
@@ -101,7 +83,7 @@ function App() {
         <button 
           onClick={skipVideo}
           style={{
-            position: 'absolute', bottom: '2rem', right: '2rem', zIndex: 50,
+            position: 'absolute', bottom: '2rem', right: '2rem', zIndex: 150,
             background: 'rgba(0,0,0,0.5)', color: 'white', padding: '0.8rem 1.5rem',
             border: '1px solid rgba(255,255,255,0.3)', borderRadius: '4px',
             display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer',
@@ -111,12 +93,34 @@ function App() {
           Omitir <SkipForward size={16} />
         </button>
       </div>
-    );
-  }
 
-  // Invitation View
-  return (
-    <div className="app-container">
+      {viewMode === 'landing' && (
+        <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
+          <div style={{
+            position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+            backgroundImage: 'url(/fotos/photo-1.jpeg)', backgroundSize: 'cover', backgroundPosition: 'center',
+            opacity: 0.3, zIndex: 0
+          }}></div>
+          
+          <div style={{ zIndex: 10, textAlign: 'center' }}>
+            <FadeIn delay={0.2} direction="down">
+              <p className="magazine-subtitle" style={{ marginBottom: '1rem' }}>Edición Especial • 2026</p>
+            </FadeIn>
+            <FadeIn delay={0.4}>
+              <h1 className="magazine-title" style={{ fontSize: 'clamp(3rem, 12vw, 8rem)' }}>Renata<br/>Sialle</h1>
+            </FadeIn>
+            
+            <FadeIn delay={0.8}>
+              <button onClick={startVideo} className="btn-primary" style={{ marginTop: '3rem', display: 'flex', alignItems: 'center', gap: '0.5rem', margin: '3rem auto 0 auto' }}>
+                <Play size={18} /> Ingresar a la invitación
+              </button>
+            </FadeIn>
+          </div>
+        </div>
+      )}
+
+      {viewMode === 'invitation' && (
+        <>
       {/* Hero / Cover Section */}
       <section className="section-container" style={{ justifyContent: 'center' }}>
         <div style={{ position: 'absolute', top: '2rem', left: '0', width: '100%', textAlign: 'center' }}>
@@ -266,6 +270,8 @@ function App() {
           </FadeIn>
         </div>
       </section>
+      </>
+      )}
     </div>
   );
 }

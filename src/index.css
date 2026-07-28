@@ -1,0 +1,132 @@
+:root {
+  --font-serif: 'Bodoni Moda', serif;
+  --font-sans: 'Inter', sans-serif;
+  
+  --color-bg: #050505;
+  --color-surface: #111111;
+  --color-surface-hover: #1a1a1a;
+  
+  --color-text: #f0f0f0;
+  --color-text-muted: #999999;
+  
+  --color-accent: #d4af37; /* Champagne Gold */
+  --color-accent-hover: #b5952f;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6, .serif {
+  font-family: var(--font-serif);
+  font-weight: 400;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* Utilities */
+.text-center { text-align: center; }
+.uppercase { text-transform: uppercase; }
+.tracking-widest { letter-spacing: 0.2em; }
+.tracking-wider { letter-spacing: 0.1em; }
+
+/* Magazine aesthetic */
+.magazine-title {
+  font-family: var(--font-serif);
+  font-size: clamp(4rem, 15vw, 10rem);
+  line-height: 0.9;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #fff, #999);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.magazine-subtitle {
+  font-family: var(--font-sans);
+  font-size: clamp(0.7rem, 2vw, 1rem);
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.section-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 2rem;
+  position: relative;
+}
+
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 3rem;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.btn-primary {
+  display: inline-block;
+  background-color: var(--color-text);
+  color: var(--color-bg);
+  padding: 1rem 2rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  border: 1px solid var(--color-text);
+  border-radius: 2px;
+}
+
+.btn-primary:hover {
+  background-color: transparent;
+  color: var(--color-text);
+}
+
+.btn-outline {
+  display: inline-block;
+  background-color: transparent;
+  color: var(--color-text);
+  padding: 1rem 2rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 2px;
+}
+
+.btn-outline:hover {
+  border-color: var(--color-text);
+  background-color: rgba(255,255,255,0.05);
+}

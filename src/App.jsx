@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { MapPin, Calendar, Clock, Gift, Utensils, AlertTriangle } from 'lucide-react';
+import { MapPin, Calendar, Clock, Gift, Utensils, AlertTriangle, Play, SkipForward } from 'lucide-react';
 import './index.css';
 
 const FadeIn = ({ children, delay = 0, direction = 'up' }) => {
@@ -44,6 +44,77 @@ const FadeIn = ({ children, delay = 0, direction = 'up' }) => {
 };
 
 function App() {
+  const [viewMode, setViewMode] = useState('landing'); // 'landing', 'video', 'invitation'
+  const videoRef = useRef(null);
+
+  const startVideo = () => {
+    setViewMode('video');
+    setTimeout(() => {
+      if (videoRef.current) {
+        videoRef.current.play().catch(e => console.error("Error playing video:", e));
+      }
+    }, 100);
+  };
+
+  const skipVideo = () => {
+    setViewMode('invitation');
+  };
+
+  if (viewMode === 'landing') {
+    return (
+      <div className="app-container" style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
+        {/* We can use one of the photos as a dim background for the landing */}
+        <div style={{
+          position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+          backgroundImage: 'url(/fotos/photo-1.jpeg)', backgroundSize: 'cover', backgroundPosition: 'center',
+          opacity: 0.3, zIndex: 0
+        }}></div>
+        
+        <div style={{ zIndex: 10, textAlign: 'center' }}>
+          <FadeIn delay={0.2} direction="down">
+            <p className="magazine-subtitle" style={{ marginBottom: '1rem' }}>Edición Especial • 2026</p>
+          </FadeIn>
+          <FadeIn delay={0.4}>
+            <h1 className="magazine-title" style={{ fontSize: 'clamp(3rem, 12vw, 8rem)' }}>Renata<br/>Sialle</h1>
+          </FadeIn>
+          
+          <FadeIn delay={0.8}>
+            <button onClick={startVideo} className="btn-primary" style={{ marginTop: '3rem', display: 'flex', alignItems: 'center', gap: '0.5rem', margin: '3rem auto 0 auto' }}>
+              <Play size={18} /> Ingresar a la invitación
+            </button>
+          </FadeIn>
+        </div>
+      </div>
+    );
+  }
+
+  if (viewMode === 'video') {
+    return (
+      <div style={{ width: '100vw', height: '100vh', backgroundColor: 'black', position: 'relative' }}>
+        <video 
+          ref={videoRef}
+          src="/intro-video.mp4" 
+          style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+          onEnded={skipVideo}
+          playsInline
+        />
+        <button 
+          onClick={skipVideo}
+          style={{
+            position: 'absolute', bottom: '2rem', right: '2rem', zIndex: 50,
+            background: 'rgba(0,0,0,0.5)', color: 'white', padding: '0.8rem 1.5rem',
+            border: '1px solid rgba(255,255,255,0.3)', borderRadius: '4px',
+            display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer',
+            textTransform: 'uppercase', letterSpacing: '2px', fontSize: '0.8rem'
+          }}
+        >
+          Omitir <SkipForward size={16} />
+        </button>
+      </div>
+    );
+  }
+
+  // Invitation View
   return (
     <div className="app-container">
       {/* Hero / Cover Section */}
@@ -61,7 +132,7 @@ function App() {
           
           <FadeIn delay={0.7}>
             <p className="uppercase tracking-widest" style={{ marginTop: '2rem', fontSize: '0.9rem', color: 'var(--color-text-muted)' }}>
-              Estás invitado a celebrar
+              Mis 15 Años
             </p>
             <div style={{ width: '1px', height: '60px', backgroundColor: 'var(--color-accent)', margin: '2rem auto' }}></div>
           </FadeIn>
@@ -134,6 +205,22 @@ function App() {
                 </div>
               </div>
             </div>
+          </div>
+        </FadeIn>
+      </section>
+
+      {/* Photo Gallery Section */}
+      <section className="section-container" style={{ padding: '2rem 1rem' }}>
+        <FadeIn>
+          <h2 className="serif text-center" style={{ fontSize: '2.5rem', marginBottom: '3rem', color: 'var(--color-accent)' }}>
+            Vogue Gallery
+          </h2>
+          <div className="gallery-grid">
+            {Array.from({ length: 11 }).map((_, i) => (
+              <div key={i} className="gallery-item">
+                <img src={`/fotos/photo-${i + 1}.jpeg`} alt={`Renata Sialle - ${i + 1}`} loading="lazy" />
+              </div>
+            ))}
           </div>
         </FadeIn>
       </section>

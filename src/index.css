@@ -131,6 +131,25 @@ button {
   background-color: rgba(255,255,255,0.05);
 }
 
+.cards-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .cards-grid {
+    flex-direction: row;
+    justify-content: center;
+  }
+  .cards-grid > * {
+    flex: 1;
+  }
+}
+
 /* Gallery Styles */
 .gallery-grid {
   display: grid;

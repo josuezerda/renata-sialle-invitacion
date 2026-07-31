@@ -92,7 +92,7 @@ function App() {
         <>
           {/* WhatsApp Button */}
           <a 
-            href="#" 
+            href="https://wa.me/5493856208453" 
             target="_blank" 
             rel="noopener noreferrer"
             style={{
@@ -355,7 +355,7 @@ function App() {
       {/* Gifts & RSVP Section */}
       <section className="section-container" style={{ backgroundColor: 'var(--color-surface)', paddingBottom: '6rem', position: 'relative', zIndex: 10 }}>
         <FadeIn>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', maxWidth: '800px', width: '100%', margin: '0 auto' }}>
+          <div className="cards-grid">
             
             {/* Gifts Card */}
             <div className="card text-center" style={{ padding: '2.5rem 1.5rem' }}>

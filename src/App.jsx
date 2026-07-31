@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, useAnimation } from 'framer-motion';
+import { motion, useAnimation, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { MapPin, Calendar, Clock, Gift, Utensils, AlertTriangle, Play, SkipForward, MessageCircle, Volume2, VolumeX } from 'lucide-react';
 import Particles from "react-tsparticles";
@@ -42,6 +42,47 @@ const FadeIn = ({ children, delay = 0, direction = 'up' }) => {
     >
       {children}
     </motion.div>
+  );
+};
+
+const DynamicGallery = () => {
+  const [slots, setSlots] = useState(() => Array.from({ length: 14 }).map((_, i) => i + 1));
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSlots(prev => {
+        const newSlots = [...prev];
+        const slotToChange = Math.floor(Math.random() * newSlots.length);
+        const availablePhotos = Array.from({ length: 15 }).map((_, i) => i + 1).filter(p => !newSlots.includes(p));
+        if (availablePhotos.length > 0) {
+          const newPhoto = availablePhotos[Math.floor(Math.random() * availablePhotos.length)];
+          newSlots[slotToChange] = newPhoto;
+        }
+        return newSlots;
+      });
+    }, 2500); // Change one photo every 2.5 seconds
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="gallery-grid">
+      {slots.map((photoNum, i) => (
+        <div key={i} className="gallery-item" style={{ position: 'relative' }}>
+          <AnimatePresence>
+            <motion.img 
+              key={photoNum}
+              src={`/fotos/photo-${photoNum}.jpeg`} 
+              alt={`Renata Sialle - ${photoNum}`} 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.5 }}
+              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+            />
+          </AnimatePresence>
+        </div>
+      ))}
+    </div>
   );
 };
 
@@ -248,6 +289,23 @@ function App() {
         </div>
       </section>
 
+      {/* Top Parallax Banner */}
+      <div 
+        style={{
+          width: '100%',
+          height: '40vh',
+          minHeight: '300px',
+          backgroundImage: 'url(/fotos/banner-top.jpg)',
+          backgroundAttachment: 'fixed',
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+          position: 'relative',
+          zIndex: 10,
+          borderTop: '1px solid rgba(255,255,255,0.1)',
+          borderBottom: '1px solid rgba(255,255,255,0.1)'
+        }}
+      ></div>
+
       {/* Details Section */}
       <section className="section-container" style={{ backgroundColor: 'var(--color-surface)', position: 'relative', zIndex: 10 }}>
         <FadeIn>
@@ -324,13 +382,7 @@ function App() {
           <h2 className="serif text-center" style={{ fontSize: '2.5rem', marginBottom: '3rem', color: 'var(--color-accent)' }}>
             Vogue Gallery
           </h2>
-          <div className="gallery-grid">
-            {Array.from({ length: 14 }).map((_, i) => (
-              <div key={i} className="gallery-item">
-                <img src={`/fotos/photo-${i + 1}.jpeg`} alt={`Renata Sialle - ${i + 1}`} loading="lazy" style={{ animationDelay: `-${i * 1.5}s` }} />
-              </div>
-            ))}
-          </div>
+          <DynamicGallery />
         </FadeIn>
       </section>
 

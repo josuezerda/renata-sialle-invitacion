@@ -292,7 +292,7 @@ function App() {
       {/* Top Parallax Banner */}
       <div 
         className="parallax-banner"
-        style={{ backgroundImage: 'url(/fotos/banner-top.jpg)' }}
+        style={{ backgroundImage: 'url(/fotos/002.jpg)' }}
       ></div>
 
       {/* Details Section */}
@@ -378,7 +378,7 @@ function App() {
       {/* Parallax Banner Separator */}
       <div 
         className="parallax-banner"
-        style={{ backgroundImage: 'url(/fotos/banner.jpeg)', margin: '2rem 0' }}
+        style={{ backgroundImage: 'url(/fotos/001.jpg)', margin: '2rem 0' }}
       ></div>
 
       {/* Gifts & RSVP Section */}

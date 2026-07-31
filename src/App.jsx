@@ -291,19 +291,8 @@ function App() {
 
       {/* Top Parallax Banner */}
       <div 
-        style={{
-          width: '100%',
-          height: '40vh',
-          minHeight: '300px',
-          backgroundImage: 'url(/fotos/banner-top.jpg)',
-          backgroundAttachment: 'fixed',
-          backgroundPosition: 'center',
-          backgroundSize: 'cover',
-          position: 'relative',
-          zIndex: 10,
-          borderTop: '1px solid rgba(255,255,255,0.1)',
-          borderBottom: '1px solid rgba(255,255,255,0.1)'
-        }}
+        className="parallax-banner"
+        style={{ backgroundImage: 'url(/fotos/banner-top.jpg)' }}
       ></div>
 
       {/* Details Section */}
@@ -388,20 +377,8 @@ function App() {
 
       {/* Parallax Banner Separator */}
       <div 
-        style={{
-          width: '100%',
-          height: '35vh',
-          minHeight: '250px',
-          backgroundImage: 'url(/fotos/banner.jpeg)',
-          backgroundAttachment: 'fixed',
-          backgroundPosition: 'center',
-          backgroundSize: 'cover',
-          position: 'relative',
-          zIndex: 10,
-          borderTop: '1px solid rgba(255,255,255,0.1)',
-          borderBottom: '1px solid rgba(255,255,255,0.1)',
-          margin: '2rem 0'
-        }}
+        className="parallax-banner"
+        style={{ backgroundImage: 'url(/fotos/banner.jpeg)', margin: '2rem 0' }}
       ></div>
 
       {/* Gifts & RSVP Section */}

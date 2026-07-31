@@ -150,6 +150,30 @@ button {
   }
 }
 
+/* Parallax Banner Fix for Mobile (iOS background-attachment bug) */
+.parallax-banner {
+  width: 100%;
+  height: 40vh;
+  min-height: 300px;
+  background-position: center top;
+  background-size: cover;
+  background-attachment: fixed;
+  position: relative;
+  z-index: 10;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+@media (max-width: 768px) {
+  .parallax-banner {
+    /* Disable fixed attachment on mobile to prevent extreme zooming */
+    background-attachment: scroll;
+    height: 40vh;
+    min-height: 250px;
+    background-position: center center;
+  }
+}
+
 /* Gallery Styles */
 .gallery-grid {
   display: grid;

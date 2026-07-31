@@ -325,7 +325,7 @@ function App() {
             Vogue Gallery
           </h2>
           <div className="gallery-grid">
-            {Array.from({ length: 11 }).map((_, i) => (
+            {Array.from({ length: 14 }).map((_, i) => (
               <div key={i} className="gallery-item">
                 <img src={`/fotos/photo-${i + 1}.jpeg`} alt={`Renata Sialle - ${i + 1}`} loading="lazy" style={{ animationDelay: `-${i * 1.5}s` }} />
               </div>
@@ -333,6 +333,24 @@ function App() {
           </div>
         </FadeIn>
       </section>
+
+      {/* Parallax Banner Separator */}
+      <div 
+        style={{
+          width: '100%',
+          height: '35vh',
+          minHeight: '250px',
+          backgroundImage: 'url(/fotos/banner.jpeg)',
+          backgroundAttachment: 'fixed',
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+          position: 'relative',
+          zIndex: 10,
+          borderTop: '1px solid rgba(255,255,255,0.1)',
+          borderBottom: '1px solid rgba(255,255,255,0.1)',
+          margin: '2rem 0'
+        }}
+      ></div>
 
       {/* Gifts & RSVP Section */}
       <section className="section-container" style={{ backgroundColor: 'var(--color-surface)', paddingBottom: '6rem', position: 'relative', zIndex: 10 }}>

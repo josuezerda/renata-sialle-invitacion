@@ -128,7 +128,7 @@ function App() {
       <div 
         style={{ 
           display: viewMode === 'video' ? 'block' : 'none',
-          position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', 
+          position: 'fixed', top: 0, left: 0, width: '100vw', height: '100dvh', 
           backgroundColor: 'black', zIndex: 100 
         }}
       >
@@ -143,7 +143,7 @@ function App() {
         <button 
           onClick={skipVideo}
           style={{
-            position: 'absolute', bottom: '2rem', right: '2rem', zIndex: 150,
+            position: 'absolute', bottom: '15%', right: '2rem', zIndex: 150,
             background: 'rgba(0,0,0,0.5)', color: 'white', padding: '0.8rem 1.5rem',
             border: '1px solid rgba(255,255,255,0.3)', borderRadius: '4px',
             display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer',

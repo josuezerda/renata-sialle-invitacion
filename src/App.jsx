@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { MapPin, Calendar, Clock, Gift, Utensils, AlertTriangle, Play, SkipForward } from 'lucide-react';
+import { MapPin, Calendar, Clock, Gift, Utensils, AlertTriangle, Play, SkipForward, MessageCircle, Volume2, VolumeX } from 'lucide-react';
+import Particles from "react-tsparticles";
+import { loadSlim } from "tsparticles-slim";
 import './index.css';
 
 const FadeIn = ({ children, delay = 0, direction = 'up' }) => {
@@ -45,7 +47,13 @@ const FadeIn = ({ children, delay = 0, direction = 'up' }) => {
 
 function App() {
   const [viewMode, setViewMode] = useState('landing'); // 'landing', 'video', 'invitation'
+  const [isMuted, setIsMuted] = useState(false);
   const videoRef = useRef(null);
+  const audioRef = useRef(null);
+
+  const particlesInit = useCallback(async engine => {
+    await loadSlim(engine);
+  }, []);
 
   const startVideo = () => {
     setViewMode('video');
@@ -59,11 +67,63 @@ function App() {
       videoRef.current.pause();
     }
     setViewMode('invitation');
+    // Start background music
+    if (audioRef.current && !isMuted) {
+      audioRef.current.volume = 0.5;
+      audioRef.current.play().catch(e => console.error("Error playing audio:", e));
+    }
+  };
+
+  const toggleMute = () => {
+    if (audioRef.current) {
+      audioRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
   };
 
   return (
     <div className="app-container" style={{ position: 'relative', overflowX: 'hidden' }}>
       
+      {/* Background Audio */}
+      <audio ref={audioRef} src="/theme-music.mp3" loop />
+
+      {/* Floating Buttons (Visible only on invitation) */}
+      {viewMode === 'invitation' && (
+        <>
+          {/* WhatsApp Button */}
+          <a 
+            href="#" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={{
+              position: 'fixed', bottom: '2rem', right: '2rem', zIndex: 1000,
+              backgroundColor: '#25D366', color: 'white', padding: '1rem',
+              borderRadius: '50%', boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              textDecoration: 'none'
+            }}
+            title="Asistencia por WhatsApp"
+          >
+            <MessageCircle size={28} />
+          </a>
+
+          {/* Music Toggle Button */}
+          <button 
+            onClick={toggleMute}
+            style={{
+              position: 'fixed', bottom: '2rem', left: '2rem', zIndex: 1000,
+              backgroundColor: 'rgba(20,20,20,0.8)', color: 'var(--color-accent)', 
+              padding: '1rem', borderRadius: '50%', 
+              boxShadow: '0 4px 10px rgba(0,0,0,0.3)', border: '1px solid var(--color-accent)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer'
+            }}
+            title={isMuted ? "Activar música" : "Silenciar música"}
+          >
+            {isMuted ? <VolumeX size={24} /> : <Volume2 size={24} />}
+          </button>
+        </>
+      )}
+
       {/* Video is always mounted to preload it, but only visible during 'video' mode */}
       <div 
         style={{ 
@@ -121,8 +181,45 @@ function App() {
 
       {viewMode === 'invitation' && (
         <>
+      {/* Particles Background */}
+      <Particles
+        id="tsparticles"
+        init={particlesInit}
+        style={{ position: 'absolute', top: 0, left: 0, zIndex: 0, opacity: 0.6 }}
+        options={{
+          background: { color: { value: "transparent" } },
+          fpsLimit: 60,
+          interactivity: {
+            events: {
+              onHover: { enable: true, mode: "grab" },
+              resize: true,
+            },
+            modes: {
+              grab: { distance: 140, links: { opacity: 0.5 } },
+            },
+          },
+          particles: {
+            color: { value: "#ffffff" },
+            links: { color: "#ffffff", distance: 150, enable: true, opacity: 0.1, width: 1 },
+            move: {
+              direction: "none",
+              enable: true,
+              outModes: { default: "bounce" },
+              random: true,
+              speed: 1,
+              straight: false,
+            },
+            number: { density: { enable: true, area: 800 }, value: 40 },
+            opacity: { value: 0.3 },
+            shape: { type: "circle" },
+            size: { value: { min: 1, max: 3 } },
+          },
+          detectRetina: true,
+        }}
+      />
+
       {/* Hero / Cover Section */}
-      <section className="section-container" style={{ justifyContent: 'center' }}>
+      <section className="section-container" style={{ justifyContent: 'center', position: 'relative', zIndex: 10 }}>
         <div style={{ position: 'absolute', top: '2rem', left: '0', width: '100%', textAlign: 'center' }}>
           <FadeIn delay={0.2} direction="down">
             <p className="magazine-subtitle">Edición Especial • 2026</p>
@@ -144,7 +241,7 @@ function App() {
       </section>
 
       {/* Details Section */}
-      <section className="section-container" style={{ backgroundColor: 'var(--color-surface)' }}>
+      <section className="section-container" style={{ backgroundColor: 'var(--color-surface)', position: 'relative', zIndex: 10 }}>
         <FadeIn>
           <div className="card text-center" style={{ backgroundColor: 'var(--color-bg)' }}>
             <h2 className="serif" style={{ fontSize: '2.5rem', marginBottom: '3rem', color: 'var(--color-accent)' }}>
@@ -181,7 +278,7 @@ function App() {
       </section>
 
       {/* Dress Code Section */}
-      <section className="section-container">
+      <section className="section-container" style={{ position: 'relative', zIndex: 10 }}>
         <FadeIn>
           <div className="text-center" style={{ maxWidth: '600px', margin: '0 auto' }}>
             <h2 className="serif" style={{ fontSize: '3rem', marginBottom: '1rem' }}>Dress Code</h2>
@@ -214,7 +311,7 @@ function App() {
       </section>
 
       {/* Photo Gallery Section */}
-      <section className="section-container" style={{ padding: '2rem 1rem' }}>
+      <section className="section-container" style={{ padding: '2rem 1rem', position: 'relative', zIndex: 10 }}>
         <FadeIn>
           <h2 className="serif text-center" style={{ fontSize: '2.5rem', marginBottom: '3rem', color: 'var(--color-accent)' }}>
             Vogue Gallery
@@ -230,7 +327,7 @@ function App() {
       </section>
 
       {/* Gifts & RSVP Section */}
-      <section className="section-container" style={{ backgroundColor: 'var(--color-surface)', paddingBottom: '6rem' }}>
+      <section className="section-container" style={{ backgroundColor: 'var(--color-surface)', paddingBottom: '6rem', position: 'relative', zIndex: 10 }}>
         <FadeIn>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', maxWidth: '800px', width: '100%', margin: '0 auto' }}>
             
@@ -241,9 +338,16 @@ function App() {
               <p style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)', marginBottom: '2rem', lineHeight: '1.5' }}>
                 Tu presencia es mi mayor regalo, pero si deseas tener un detalle, puedes hacerlo a través de la siguiente cuenta:
               </p>
-              <div style={{ backgroundColor: 'rgba(255,255,255,0.03)', padding: '1rem', borderRadius: '4px', marginBottom: '1.5rem' }}>
-                <p className="uppercase tracking-wider" style={{ fontSize: '0.7rem', color: 'var(--color-text-muted)', marginBottom: '0.5rem' }}>Alias</p>
-                <p style={{ fontSize: '1.1rem', letterSpacing: '0.05em' }}>[ A confirmar ]</p>
+              
+              <div style={{ backgroundColor: 'rgba(255,255,255,0.03)', padding: '1.5rem 1rem', borderRadius: '4px', marginBottom: '1.5rem', textAlign: 'left' }}>
+                <p style={{ fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '0.5rem', color: 'var(--color-accent)' }}>
+                  Eleonora Renata Sialle
+                </p>
+                <p className="uppercase tracking-wider" style={{ fontSize: '0.7rem', color: 'var(--color-text-muted)', marginBottom: '0.2rem' }}>Alias</p>
+                <p style={{ fontSize: '1.1rem', letterSpacing: '0.05em', marginBottom: '1rem' }}>renatasialle</p>
+                
+                <p className="uppercase tracking-wider" style={{ fontSize: '0.7rem', color: 'var(--color-text-muted)', marginBottom: '0.2rem' }}>CVU</p>
+                <p style={{ fontSize: '1.1rem', letterSpacing: '0.05em' }}>0000003100083789875201</p>
               </div>
             </div>
 

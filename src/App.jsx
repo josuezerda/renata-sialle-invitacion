@@ -207,7 +207,7 @@ function App() {
         <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
           <div style={{
             position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
-            backgroundImage: 'url(/fotos/photo-1.jpeg)', backgroundSize: 'cover', backgroundPosition: 'center',
+            backgroundImage: 'url(/fotos/002.jpg)', backgroundSize: 'cover', backgroundPosition: 'center',
             opacity: 0.3, zIndex: 0
           }}></div>
           

@@ -327,7 +327,7 @@ function App() {
           <div className="gallery-grid">
             {Array.from({ length: 11 }).map((_, i) => (
               <div key={i} className="gallery-item">
-                <img src={`/fotos/photo-${i + 1}.jpeg`} alt={`Renata Sialle - ${i + 1}`} loading="lazy" />
+                <img src={`/fotos/photo-${i + 1}.jpeg`} alt={`Renata Sialle - ${i + 1}`} loading="lazy" style={{ animationDelay: `-${i * 1.5}s` }} />
               </div>
             ))}
           </div>

@@ -46,14 +46,14 @@ const FadeIn = ({ children, delay = 0, direction = 'up' }) => {
 };
 
 const DynamicGallery = () => {
-  const [slots, setSlots] = useState(() => Array.from({ length: 14 }).map((_, i) => i + 1));
+  const [slots, setSlots] = useState(() => Array.from({ length: 15 }).map((_, i) => i + 1));
 
   useEffect(() => {
     const interval = setInterval(() => {
       setSlots(prev => {
         const newSlots = [...prev];
         const slotToChange = Math.floor(Math.random() * newSlots.length);
-        const availablePhotos = Array.from({ length: 15 }).map((_, i) => i + 1).filter(p => !newSlots.includes(p));
+        const availablePhotos = Array.from({ length: 16 }).map((_, i) => i + 1).filter(p => !newSlots.includes(p));
         if (availablePhotos.length > 0) {
           const newPhoto = availablePhotos[Math.floor(Math.random() * availablePhotos.length)];
           newSlots[slotToChange] = newPhoto;

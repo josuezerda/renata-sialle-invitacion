@@ -324,7 +324,11 @@ function App() {
                 <MapPin size={24} style={{ color: 'var(--color-text-muted)' }} />
                 <div style={{ textAlign: 'left' }}>
                   <p className="uppercase tracking-wider" style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>Ubicación</p>
-                  <p style={{ fontSize: '1.2rem', fontWeight: '500' }}>Zambra</p>
+                  <p style={{ fontSize: '1.2rem', fontWeight: '500' }}>
+                    <a href="https://maps.app.goo.gl/TzGT5CNaJkwJGAEP7" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-text)', textDecoration: 'underline' }}>
+                      Zambra
+                    </a>
+                  </p>
                 </div>
               </div>
             </div>
@@ -413,7 +417,7 @@ function App() {
               <p style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)', marginBottom: '2rem', lineHeight: '1.5' }}>
                 Queremos que disfrutes al máximo. Por favor infórmanos si tienes alguna restricción alimentaria o llevas una dieta especial.
               </p>
-              <a href="#" className="btn-primary" style={{ width: '100%' }}>
+              <a href="https://wa.me/5493856208453?text=Hola,%20quer%C3%ADa%20avisar%20sobre%20una%20restricci%C3%B3n%20alimentaria" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ width: '100%' }}>
                 Avisar Restricción
               </a>
             </div>

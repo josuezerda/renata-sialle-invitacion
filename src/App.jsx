@@ -429,6 +429,19 @@ function App() {
           </FadeIn>
         </div>
       </section>
+
+      {/* Footer */}
+      <footer style={{ backgroundColor: 'var(--color-bg)', padding: '4rem 1rem', textAlign: 'center', position: 'relative', zIndex: 10, borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+        <FadeIn>
+          <h2 className="magazine-title" style={{ fontSize: '3rem', marginBottom: '1.5rem', color: 'var(--color-text)', textTransform: 'none' }}>Renata</h2>
+          <p style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)', marginBottom: '1rem', letterSpacing: '0.05em' }}>
+            © 2026 — Mis 15 Años, Renata Sialle.
+          </p>
+          <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', letterSpacing: '0.02em' }}>
+            Desarrollado con ♥ por <a href="https://wa.me/5493855381804" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-text)', textDecoration: 'none', fontWeight: 'bold' }}>Fusión IA</a> & <a href="https://wa.me/5493855056821" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-text)', textDecoration: 'none', fontWeight: 'bold' }}>Fuego Creativo</a>
+          </p>
+        </FadeIn>
+      </footer>
       </>
       )}
     </div>

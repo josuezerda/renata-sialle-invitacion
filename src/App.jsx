@@ -342,8 +342,11 @@ function App() {
         <FadeIn>
           <div className="text-center" style={{ maxWidth: '600px', margin: '0 auto' }}>
             <h2 className="serif" style={{ fontSize: '3rem', marginBottom: '1rem' }}>Dress Code</h2>
-            <p className="uppercase tracking-widest" style={{ color: 'var(--color-accent)', marginBottom: '3rem', fontSize: '1.2rem' }}>
-              "El diablo viste a la moda"
+            <p className="uppercase tracking-widest" style={{ color: 'var(--color-accent)', marginBottom: '0.8rem', fontSize: '1.5rem', fontWeight: 'bold', letterSpacing: '0.15em' }}>
+              Formal Estricto
+            </p>
+            <p className="uppercase tracking-widest" style={{ color: 'var(--color-text-muted)', marginBottom: '3rem', fontSize: '1rem' }}>
+              Temática: "El Diablo Viste a la Moda"
             </p>
             
             <div style={{ padding: '2rem', border: '1px solid rgba(255,255,255,0.1)', position: 'relative' }}>
@@ -439,6 +442,18 @@ function App() {
         
         <div className="text-center" style={{ marginTop: '6rem' }}>
           <FadeIn delay={0.2}>
+            <div style={{ padding: '2rem', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', maxWidth: '500px', margin: '0 auto 3rem' }}>
+              <Calendar size={28} style={{ margin: '0 auto 1rem', color: 'var(--color-accent)' }} />
+              <p className="serif" style={{ fontSize: '1.2rem', color: 'var(--color-text)', marginBottom: '0.5rem' }}>
+                Queremos que la noche sea perfecta para vos también.
+              </p>
+              <p style={{ fontSize: '0.95rem', color: 'var(--color-text-muted)', marginBottom: '1.5rem', lineHeight: '1.5' }}>
+                Ayudanos con estos detalles y confirmá tu asistencia.
+              </p>
+              <p className="uppercase tracking-widest" style={{ fontSize: '0.85rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '0.1em' }}>
+                Confirmar antes del 26 de Octubre
+              </p>
+            </div>
             <p className="serif" style={{ fontSize: '1.5rem', color: 'var(--color-accent)', fontStyle: 'italic' }}>
               ¡Nos vemos en la pasarela!
             </p>

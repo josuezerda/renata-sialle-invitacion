@@ -89,6 +89,7 @@ const DynamicGallery = () => {
 function App() {
   const [viewMode, setViewMode] = useState('landing'); // 'landing', 'video', 'invitation'
   const [isMuted, setIsMuted] = useState(false);
+  const [copied, setCopied] = useState(false);
   const videoRef = useRef(null);
   const audioRef = useRef(null);
 
@@ -408,6 +409,17 @@ function App() {
                 <p className="uppercase tracking-wider" style={{ fontSize: '0.7rem', color: 'var(--color-text-muted)', marginBottom: '0.2rem' }}>CVU</p>
                 <p style={{ fontSize: '1.1rem', letterSpacing: '0.05em' }}>0000003100083789875201</p>
               </div>
+              <button 
+                className="btn-primary" 
+                style={{ width: '100%', backgroundColor: copied ? '#4ade80' : 'var(--color-accent)', color: copied ? '#000' : '#fff' }}
+                onClick={() => {
+                  navigator.clipboard.writeText('renatasialle');
+                  setCopied(true);
+                  setTimeout(() => setCopied(false), 2000);
+                }}
+              >
+                {copied ? '¡Copiado!' : 'Copiar Alias'}
+              </button>
             </div>
 
             {/* Diet Card */}

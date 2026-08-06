@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, useAnimation, AnimatePresence } from 'framer-motion';
+import { motion, useAnimation, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { MapPin, Calendar, Clock, Gift, Utensils, AlertTriangle, Play, SkipForward, MessageCircle, Volume2, VolumeX } from 'lucide-react';
 import Particles from "react-tsparticles";
@@ -42,6 +42,35 @@ const FadeIn = ({ children, delay = 0, direction = 'up' }) => {
     >
       {children}
     </motion.div>
+  );
+};
+
+const ParallaxBanner = ({ imageUrl, margin = '0' }) => {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"]
+  });
+  const y = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
+
+  return (
+    <div ref={ref} style={{ width: '100%', height: '40vh', minHeight: '300px', overflow: 'hidden', position: 'relative', margin, zIndex: 10 }}>
+      <motion.div
+        style={{
+          position: 'absolute',
+          top: "-25%",
+          left: 0,
+          right: 0,
+          bottom: "-25%",
+          backgroundImage: `url(${imageUrl})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          y,
+          zIndex: 0
+        }}
+      />
+      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 1, borderTop: '1px solid rgba(255,255,255,0.1)', borderBottom: '1px solid rgba(255,255,255,0.1)' }} />
+    </div>
   );
 };
 
@@ -291,10 +320,7 @@ function App() {
       </section>
 
       {/* Top Parallax Banner */}
-      <div 
-        className="parallax-banner"
-        style={{ backgroundImage: 'url(/fotos/001.jpg)' }}
-      ></div>
+      <ParallaxBanner imageUrl="/fotos/001.jpg" />
 
       {/* Details Section */}
       <section className="section-container" style={{ backgroundColor: 'var(--color-surface)', position: 'relative', zIndex: 10 }}>
@@ -384,10 +410,7 @@ function App() {
       </section>
 
       {/* Parallax Banner Separator */}
-      <div 
-        className="parallax-banner"
-        style={{ backgroundImage: 'url(/fotos/banner.jpeg)', margin: '2rem 0' }}
-      ></div>
+      <ParallaxBanner imageUrl="/fotos/banner.jpeg" margin="2rem 0" />
 
       {/* Gifts & RSVP Section */}
       <section className="section-container" style={{ backgroundColor: 'var(--color-surface)', paddingBottom: '6rem', position: 'relative', zIndex: 10 }}>
